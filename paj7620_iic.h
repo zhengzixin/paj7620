@@ -1,19 +1,24 @@
 /**
- *  @file 次文件夹为paj7620 iic 的对外文件，包含了所有关于iic 硬件接口的 操作
+ * 
+ * @file 此文件是主要是配置iic相关函数，
+ * 
+ * @author ait_zhengchunyu@163.com
+ * 
+ * @brief  仅供paj7620_dev.c 调用，当移植时应修改 #include "stm32f7xx_hal.h" ,将其改成相应芯片的头文件
  * 
 */
-
-#ifndef  _PAJ7620_IIC_H
-#define _PAJ7620_IIC_H
+#ifndef __PAJ7620_IIC_H
+#define __PAJ7620_IIC_H
 
 #ifdef __cplusplus
-    extern "C"{
+extern "C" {
 #endif
 
-#include "paj7620_cfg.h"
+#include "stm32f7xx_hal.h"
 
 struct paj7620_iic_t
 {
+	uint8_t dev_id;
 		/**
 	 * 
 	 *  @向PAJ7620 指定地址写入一个数据
@@ -50,8 +55,9 @@ extern struct paj7620_iic_t  paj7620_iic ;
 void paj7620_iic_init(void);
 
 #ifdef __cplusplus
-    extern }
+  }
 #endif
 
 #endif
+
 

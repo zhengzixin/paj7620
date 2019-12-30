@@ -1,17 +1,20 @@
 /**
  *  @file  此文件包含paj7620 的主要驱动程序 
  * 
- * @author zheng
- * l  
+ * @author ait_zhengchunyu@163.com
+ * 
+ * @brief  移植时需要修改my_delay_ms(uint32_t nms)，与当前芯片匹配
  *  
 */
 #include "paj7620_dev.h"
-
-
+#include "paj7620_cfg.h"
 
 struct paj7620_dev_t paj7602_dev ;
 
-
+static void my_delay_ms(uint32_t nms)
+{
+  HAL_Delay(nms);
+}
 /**
  *  @brief  选择PAJ7620U2 BANK区域
  * 
@@ -38,9 +41,9 @@ static uint8_t  paj7620_device_wakeup(void)
 {
     uint8_t data=0x0a;
 	paj7602_dev.iicdev->wakeup();//唤醒PAJ7620U2
-	delay_ms(5);//唤醒时间>400us
+	my_delay_ms(5);//唤醒时间>400us
 	paj7602_dev.iicdev->wakeup();//唤醒PAJ7620U2
-	delay_ms(5);//唤醒时间>400us
+	my_delay_ms(5);//唤醒时间>400us
 	paj7620_select_bank(BANK0);//进入BANK0寄存器区域
 	data = paj7602_dev.iicdev->read_reg_byte(0x00);//读取状态
 	if(data!=0x20) return 1; //唤醒失败
@@ -54,10 +57,11 @@ static uint8_t  paj7620_device_wakeup(void)
 
 static void paj7620_gesture_init(void)
 {
+    int i;
     paj7620_select_bank(BANK0);//进入BANK0寄存器区域
 	for(i=0;i<GESTURE_SIZE;i++)
 	{
-		GS_Write_Byte(gesture_cfg_buf[i][0],gesture_cfg_buf[i][1]);//手势识别模式初始化
+		paj7602_dev.iicdev->write_reg_byte(gesture_cfg_buf[i][0],gesture_cfg_buf[i][1]);//手势识别模式初始化
 	}
 	paj7620_select_bank(BANK0);//切换回BANK0寄存器区域
 
@@ -77,7 +81,7 @@ uint8_t paj7260_read_gesture(void)
     uint8_t status;
 	uint8_t data[2]={0x00};
 	uint16_t gesture_data;
-    status = paj7602_dev.iicdev->read_reg_buf(PAJ_GET_INT_FLAG1,2,&data[0]);//读取手势状态			
+    status = paj7602_dev.iicdev->read_reg_buf(PAJ_GET_INT_FLAG1,&data[0],2);//读取手势状态			
 	if(!status)
 	{   
 			gesture_data =(uint16_t)data[1]<<8 | data[0];

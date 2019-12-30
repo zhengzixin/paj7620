@@ -1,19 +1,24 @@
+/**
+ * 
+ * @file 此文件包含了paj7620配置相关内容，
+ * 
+ * @author ait_zhengchunyu@163.com
+ * 
+ * @brief 此文件是根据移植自正点原子代码移植而来
+ * 
+*/
 #ifndef __PAJ7620_CFG_H
 #define __PAJ7620_CFG_H
 
 
-/* ---------------Includes ----------------*/
+#ifdef __cplusplus
+	extern "C"{
 
+#endif 
 
-#ifndef  uint8_t  
-#define  uint8_t  unsigned char
-#endif
-#ifndef  uint16_t  
-#define  uint16_t  unsigned short
-#endif
 
 #define INIT_SIZE sizeof(init_cfg_buf)/2
-//上电初始化数组
+
 const unsigned char init_cfg_buf[][2] = {
 
     {0xEF,0x00},
@@ -70,7 +75,7 @@ const unsigned char init_cfg_buf[][2] = {
 };
 
 #define PROXIM_SIZE sizeof(proximity_cfg_buf)/2
-//接近检测初始化数组
+
 const unsigned char proximity_cfg_buf[][2]={
 
 	{0xEF,0x00},
@@ -112,7 +117,7 @@ const unsigned char proximity_cfg_buf[][2]={
 };
 
 #define GESTURE_SIZE sizeof(gesture_cfg_buf)/2
-//手势识别初始化数组
+
 const unsigned char gesture_cfg_buf[][2]={
 	
 	{0xEF,0x00},
@@ -199,4 +204,8 @@ typedef enum{
 #define GES_CLOCKWISE       BIT(6) //顺时针
 #define GES_COUNT_CLOCKWISE BIT(7) //逆时针
 #define GES_WAVE            BIT(8) //挥动
+#ifdef _cplusplus
+	}
+#endif 	
+
 #endif 

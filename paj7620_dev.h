@@ -1,18 +1,20 @@
 /**
  * 
- * @file 与 paj7620功能有关的操作函数
+ * @file 包含了paj7620 操作的相关函数
  * 
- * @author zhengchuynu 
+ * @author ait_zhengchunyu@163.com
+ * 
+ * @brief 在使用中应调用paj7620_init()进行设备初始化
  * 
 */
+#ifndef __PAJ7620_DEV_H
+#define __PAJ7620_DEV_H
 
-#ifndef      _PAJ7620_DEV_H
-#define    _PAJ7620_DEV_H
 
 #ifdef __cplusplus
-    extern "C" {
-
+extern "C" {
 #endif
+
 
 #include "paj7620_iic.h"
 
@@ -43,8 +45,9 @@ uint8_t paj7620_init(void);
 
 
 #ifdef __cplusplus
-   extern  }
-    #endif
+  }
+#endif
 
 
-#endif /    / ! _PAJ7620_DEV_H
+#endif
+
